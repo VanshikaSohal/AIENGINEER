@@ -1,78 +1,90 @@
 # PM Accelerator Weather App
 
-Full-stack weather app (frontend + backend) built for the PM Accelerator AI Engineer Intern technical assessment.
+Built by **Vanshika Sohal** for the PM Accelerator AI Engineer Intern Technical Assessment.
 
-**Tech stack:**
-- Backend: Flask, Flask-SQLAlchemy, SQLite
-- Frontend: React (Create React App style, plain JS + CSS)
+**Product Manager Accelerator (PMA)** is a product management training and 
+career-accelerator program founded by Dr. Nancy Li. PMA helps aspiring and 
+early-career product managers break into the field through mentorship, 
+real-world projects, and a strong professional community.
 
-**What it does:**
-- Input a location (city) or use GPS to fetch current weather and a 5-day forecast via OpenWeather.
-- Store weather requests in SQLite (CRUD API).
-- Export stored records as CSV or JSON.
-- OpenStreetMap integration: view location on OSM and embedded map.
+## Tech Stack
 
-**Quick start (backend)**
+- **Frontend:** React.js
+- **Backend:** Flask (Python)
+- **Database:** SQLite via Flask-SQLAlchemy
+- **APIs:** OpenWeatherMap (weather + geocoding), OpenStreetMap (maps)
+- **Exports:** CSV, JSON, XML, Markdown, PDF (reportlab)
 
-1. Ensure Python 3.8+ is available.
-2. Install dependencies (global install is supported; virtual environments are optional):
+## Features
 
+### Frontend (Tech Assessment 1)
+- Search weather by City Name, ZIP/Postal Code, or GPS Coordinates
+- Auto-detect current location via browser Geolocation API
+- Location disambiguation — if a city exists in multiple countries, 
+  user gets a selection list
+- Current weather display with icons, temperature, humidity, wind
+- 5-day forecast in responsive card layout
+- Interactive OpenStreetMap embed with location pin
+- YouTube travel videos search link for any location
+- Fully responsive — works on desktop, tablet, and mobile
+
+### Backend (Tech Assessment 2)
+- RESTful API built with Flask
+- Full CRUD on weather records:
+  - **Create** — save location + date range, stores per-day forecast data
+  - **Read** — view all saved records
+  - **Update** — edit saved records with re-validation
+  - **Delete** — remove any record
+- Location validation via OpenWeatherMap Geocoding API
+- Date range validation (format, logical order, within forecast window)
+- Data export in 5 formats: CSV, JSON, XML, Markdown, PDF
+
+## Note on YouTube Integration
+
+YouTube embedded video playback requires a Google Cloud API key with 
+billing enabled. To avoid mandatory billing setup, this app implements 
+YouTube integration via a direct search URL — clicking the button opens 
+a YouTube search for travel and weather videos of the selected location 
+in a new tab. Full embedded video support can be added by supplying a 
+`YOUTUBE_API_KEY` in the `.env` file.
+
+## How to Run
+
+### Prerequisites
+- Python 3.10+ (recommend using conda or venv)
+- Node.js 18+
+
+### Backend
 ```bash
 cd backend
-python -m pip install -r requirements.txt
-```
-
-3. Create or update `backend/.env` with your OpenWeather API key:
-
-```text
-API_KEY=YOUR_OPENWEATHER_API_KEY
-```
-
-4. Run the backend:
-
-```bash
+pip install -r requirements.txt
 python app.py
 ```
+Runs on `http://localhost:5000`
 
-The backend runs on `http://localhost:5000` by default.
-
-**Quick start (frontend)**
-
-1. Node/npm is required to run the frontend. If Node is not installed on your machine, install it from https://nodejs.org/.
-2. From the project root:
-
+### Frontend
 ```bash
 cd frontend
 npm install
 npm start
 ```
+Runs on `http://localhost:3000`
 
-The frontend runs on `http://localhost:3000` by default and communicates with the backend at `http://localhost:5000`.
+### Environment Variables
+Create a `.env` file in the `backend/` folder:
+API_KEY=your_openweathermap_api_key
+YOUTUBE_API_KEY=your_youtube_api_key_optional
 
-**API endpoints**
-- `GET /api/test-weather` — test current weather for London
-- `POST /api/weather` — create a weather record (JSON body: `location`, `start_date`, `end_date`)
-- `GET /api/weather` — list stored records
-- `GET /api/weather/<id>` — get one record
-- `PUT /api/weather/<id>` — update a record (JSON body can include `location`, `start_date`, `end_date`)
-- `DELETE /api/weather/<id>` — delete a record
-- `GET /api/forecast?q=city` or `GET /api/forecast?lat=..&lon=..` — get 5-day forecast
-- `GET /api/export/csv` — download CSV of records
-- `GET /api/export/json` — download JSON of records
-
-**Demo recording checklist (short script)**
-1. Start the backend: `python backend/app.py`.
-2. Start the frontend: `npm start` (in `frontend/`).
-3. In the app UI, enter a city (e.g., "London"), pick a date range (same day or up to 5 days), click "Fetch & Save".
-4. Show current weather card and 5-day forecast.
-5. Click the OpenStreetMap link or scroll to the embedded map.
-6. Show the saved record in the list, then Edit and Delete it.
-7. Click Export → CSV and Export → JSON to demonstrate downloads.
-8. Mention the project author: Vanshika Sohal and the PM Accelerator blurb.
-
-**Troubleshooting / notes**
-- If the frontend shows CORS errors, ensure the backend is running and `Flask-CORS` is installed (already included).
-- If OpenWeather requests return 401, check `backend/.env` and the `API_KEY` value.
-- If Node/npm is not installed, the frontend will not run; the repo includes a minimal frontend scaffold in `frontend/` that you can start after installing Node.
-
-If you'd like, I can add a small script to record a demo automatically or prepare a short GIF—tell me which format you prefer.
+## Project Structure
+AIENGINEER/
+├── backend/
+│   ├── app.py
+│   ├── requirements.txt
+│   └── .env
+├── frontend/
+│   ├── src/
+│   │   ├── App.js
+│   │   ├── App.css
+│   │   └── index.js
+│   └── package.json
+└── README.md
