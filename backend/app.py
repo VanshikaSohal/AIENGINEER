@@ -82,8 +82,8 @@ def validate_date_range(start_str, end_str):
         return False, "Invalid date format. Use YYYY-MM-DD"
     if end < start:
         return False, "End date must be >= start date"
-    if (end - start).days > 5:
-        return False, "Maximum date range is 5 days (forecast API limitation)"
+    if (end - start).days >= 5:
+        return False, "Date range cannot exceed 5 days"
     return True, (start, end)
 
 
@@ -445,7 +445,7 @@ def youtube_links():
 
 
 EXPORT_HEADERS = [
-    'ID', 'Location', 'Date', 'Start Date', 'End Date',
+    'Location', 'Date', 'Start Date', 'End Date',
     'Temp (°C)', 'Feels Like (°C)', 'Condition',
     'Humidity (%)', 'Wind Speed (m/s)', 'Created At',
 ]
@@ -453,7 +453,6 @@ EXPORT_HEADERS = [
 
 def record_to_export_row(r):
     return [
-        str(r.id),
         r.location,
         r.date,
         r.start_date,
@@ -497,7 +496,7 @@ def export_xml():
     if not records:
         return jsonify({'error': 'No records to export'}), 404
     TAG_MAP = {
-        'ID': 'id', 'Location': 'location', 'Date': 'date',
+        'Location': 'location', 'Date': 'date',
         'Start Date': 'start_date', 'End Date': 'end_date',
         'Temp (°C)': 'temp_c', 'Feels Like (°C)': 'feels_like_c',
         'Condition': 'condition', 'Humidity (%)': 'humidity_pct',
@@ -551,7 +550,7 @@ def export_pdf():
         Spacer(1, 10),
     ]
     rows       = [EXPORT_HEADERS] + [record_to_export_row(r) for r in records]
-    col_widths = [26, 72, 58, 54, 54, 44, 52, 82, 52, 62, 74]
+    col_widths = [80, 58, 54, 54, 44, 52, 90, 52, 68, 78]
     table = Table(rows, colWidths=col_widths, repeatRows=1)
     table.setStyle(TableStyle([
         ('BACKGROUND',     (0, 0), (-1, 0),  colors.HexColor('#2c3e50')),
