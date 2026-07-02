@@ -247,6 +247,8 @@ export default function App() {
 
       <header>
         <h1>WEATHER APP</h1>
+        <p className="header-sub">Built by <strong>Vanshika Sohal</strong> for the PM Accelerator AI Engineer Intern Technical Assessment.</p>
+        <p className="header-sub">Product Manager Accelerator (PMA) is a product management training and career-accelerator program founded by Dr. Nancy Li.</p>
       </header>
 
       <main>

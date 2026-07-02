@@ -36,6 +36,13 @@ header h1 {
   font-weight: 800;
   color: #1a1a2e;
   letter-spacing: 2px;
+  margin-bottom: 6px;
+}
+
+.header-sub {
+  font-size: 0.82rem;
+  color: #6b7280;
+  margin-top: 3px;
 }
 
 /* Section headings */
