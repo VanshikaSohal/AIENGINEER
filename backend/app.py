@@ -471,14 +471,18 @@ def export_csv():
     records = WeatherRecord.query.order_by(WeatherRecord.date).all()
     if not records:
         return jsonify({'error': 'No records to export'}), 404
+
     out = StringIO()
-    w   = csv.writer(out)
+    # sep= hint tells Excel which delimiter to use when opening the file directly
+    out.write('sep=,\r\n')
+    w = csv.writer(out, quoting=csv.QUOTE_ALL)  # quote every field so commas in values never break columns
     w.writerow(EXPORT_HEADERS)
     for r in records:
         w.writerow(record_to_export_row(r))
+
     return out.getvalue(), 200, {
         'Content-Disposition': 'attachment; filename=weather_records.csv',
-        'Content-Type': 'text/csv',
+        'Content-Type': 'text/csv; charset=utf-8',
     }
 
 

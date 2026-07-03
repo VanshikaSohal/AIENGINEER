@@ -392,21 +392,24 @@ export default function App() {
               </div>
             </section>
 
-            {coords && (
-              <section>
-                <h2>Map</h2>
-                <div className="map-embed">
-                  <iframe
-                    title="osm"
-                    src={`https://www.openstreetmap.org/export/embed.html?bbox=${coords.lon - 0.5}%2C${coords.lat - 0.5}%2C${coords.lon + 0.5}%2C${coords.lat + 0.5}&layer=mapnik&marker=${coords.lat}%2C${coords.lon}`}
-                  />
-                </div>
-                <a className="map-link-text" target="_blank" rel="noreferrer"
-                   href={`https://www.openstreetmap.org/?mlat=${coords.lat}&mlon=${coords.lon}#map=12/${coords.lat}/${coords.lon}`}>
-                  Open in OpenStreetMap
-                </a>
-              </section>
-            )}
+            {coords && (() => {
+              const lat = parseFloat(coords.lat);
+              const lon = parseFloat(coords.lon);
+              const bbox = `${lon - 0.1},${lat - 0.1},${lon + 0.1},${lat + 0.1}`;
+              const mapSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat},${lon}`;
+              return (
+                <section>
+                  <h2>Map</h2>
+                  <div className="map-embed">
+                    <iframe title="osm" src={mapSrc} />
+                  </div>
+                  <a className="map-link-text" target="_blank" rel="noreferrer"
+                     href={`https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=13/${lat}/${lon}`}>
+                    Open in OpenStreetMap
+                  </a>
+                </section>
+              );
+            })()}
 
           </div>
         </div>
