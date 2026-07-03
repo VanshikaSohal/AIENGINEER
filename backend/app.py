@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, Response
+﻿from flask import Flask, jsonify, request, Response
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
@@ -437,9 +437,9 @@ def youtube_links():
         'location':   location,
         'search_url': f'https://www.youtube.com/results?search_query={tq}+weather',
         'embeds': [
-            {'title': f'{location} — Travel',       'src': f'https://www.youtube-nocookie.com/embed?listType=search&list={tq}'},
-            {'title': f'{location} — Weather',      'src': f'https://www.youtube-nocookie.com/embed?listType=search&list={wq}'},
-            {'title': f'{location} — Travel Guide', 'src': f'https://www.youtube-nocookie.com/embed?listType=search&list={gq}'},
+            {'title': f'{location} - Travel',       'src': f'https://www.youtube-nocookie.com/embed?listType=search&list={tq}'},
+            {'title': f'{location} - Weather',      'src': f'https://www.youtube-nocookie.com/embed?listType=search&list={wq}'},
+            {'title': f'{location} - Travel Guide', 'src': f'https://www.youtube-nocookie.com/embed?listType=search&list={gq}'},
         ],
     }), 200
 
@@ -530,7 +530,7 @@ def export_markdown():
         f'_Exported at {datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")} UTC_',
         '',
         '| ' + ' | '.join(EXPORT_HEADERS) + ' |',
-        '| ' + ' | '.join(['---'] * len(EXPORT_HEADERS)) + ' |',
+        '| ' + ' | '.join(['--'] * len(EXPORT_HEADERS)) + ' |',
     ]
     for r in records:
         lines.append('| ' + ' | '.join(record_to_export_row(r)) + ' |')

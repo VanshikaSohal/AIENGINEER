@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 
 const BACKEND = 'http://localhost:5000';
 
@@ -118,7 +118,7 @@ export default function App() {
       if (inputType === 'coords') {
         const parts = loc.split(',').map(s => s.trim());
         if (parts.length !== 2 || isNaN(parts[0]) || isNaN(parts[1]))
-          throw new Error('Enter coordinates as lat,lon — e.g. 32.1234,76.5678');
+          throw new Error('Enter coordinates as lat,lon - e.g. 32.1234,76.5678');
         applyWeather(await fetchWeatherByCoords(parts[0], parts[1], ''));
         return;
       }
@@ -131,7 +131,7 @@ export default function App() {
           applyWeather(await fetchWeatherByCoords(data[0].lat, data[0].lon, data[0].name));
         } else {
           setGeoMatches(data);
-          setGeoSearchText(`Results for "${loc}" — pick one:`);
+          setGeoSearchText(`Results for "${loc}" - pick one:`);
         }
         return;
       }
@@ -144,9 +144,9 @@ export default function App() {
       if (data.length === 1) {
         applyWeather(await fetchWeatherByCoords(data[0].lat, data[0].lon, data[0].name));
       } else {
-        // Multiple matches — let the user pick the exact one
+        // Multiple matches - let the user pick the exact one
         setGeoMatches(data);
-        setGeoSearchText(`"${loc}" matches ${data.length} places — pick one:`);
+        setGeoSearchText(`"${loc}" matches ${data.length} places - pick one:`);
       }
     } catch (err) {
       msg(err.message);
@@ -181,7 +181,7 @@ export default function App() {
       try {
         const res  = await fetch(`${BACKEND}/api/geocode/reverse?lat=${lat}&lon=${lon}`);
         const data = await res.json();
-        // Always use exact lat/lon for weather — pick the most local name (index 0)
+        // Always use exact lat/lon for weather - pick the most local name (index 0)
         // from reverse geocoding rather than showing a picker which lets user
         // accidentally pick a larger district city.
         const localName = (res.ok && data.length)
@@ -204,7 +204,7 @@ export default function App() {
   const handleSave = async () => {
     if (!current)               { msg('Look up a location first'); return; }
     if (!startDate || !endDate) { msg('Pick start and end dates before saving'); return; }
-    if (!coords)                { msg('No coordinates — re-run the lookup'); return; }
+    if (!coords)                { msg('No coordinates - re-run the lookup'); return; }
     if (dateRangeError)         { msg(dateRangeError); return; }
     setMessage('');
     const saveLocation = displayLabel || current.city_name || location.trim();
@@ -340,7 +340,7 @@ export default function App() {
                            src={`https://openweathermap.org/img/wn/${current.icon}@2x.png`} />
                     )}
                     <div>
-                      <div className="cw-temp">{current.temp !== null ? `${current.temp}°C` : '--'}</div>
+                      <div className="cw-temp">{current.temp !== null ? `${current.temp}°C` : '-'}</div>
                       <div className="cw-condition">{current.condition}</div>
                     </div>
                   </div>
@@ -449,7 +449,7 @@ export default function App() {
                       <td>{r.date}</td>
                       <td><span className="tbl-range">{r.start_date} to {r.end_date}</span></td>
                       <td><span className="tbl-temp">{r.temp != null ? `${r.temp}°C` : 'N/A'}</span></td>
-                      <td><span className="tbl-condition">{r.condition || '--'}</span></td>
+                      <td><span className="tbl-condition">{r.condition || '-'}</span></td>
                       <td>
                         <button className="tbl-btn del" onClick={() => deleteRecord(r.id)}>Delete</button>
                       </td>
